@@ -12,7 +12,10 @@ authenticator = stauth.Authenticate(
     config['credentials'], config['cookie']['name'], config['cookie']['key'], config['cookie']['expiry_days']
 )
 
-name, auth_status, _ = authenticator.login("Login", location='main')
+auth_status = authenticator.login("Login", location='main')
+if auth_status:
+    name = authenticator.credentials['usernames'][authenticator.username]['name']
+
 
 if auth_status:
     st.title("🏨 Hotel Pricing Demo")
