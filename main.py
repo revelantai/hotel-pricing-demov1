@@ -15,10 +15,13 @@ authenticator = stauth.Authenticate(
     config['cookie']['expiry_days']
 )
 
-# 🔑 Login mit 3 Rückgabewerten
-name, authentication_status, username = authenticator.login("Login", location="main")
+# NEUE VERSION: Nur ein Rückgabewert
+auth_status = authenticator.login("Login", location="main")
 
-if authentication_status:
+if auth_status:
+    username = authenticator.username
+    name = config["credentials"]["usernames"][username]["name"]
+
     st.title("🏨 Hotel Pricing Demo")
     st.success(f"Willkommen zurück, {name}!")
 
@@ -36,7 +39,7 @@ if authentication_status:
         gewinn = (neuer_preis - basis) * auslastung * 90
         st.info(f"📆 Gewinn über 90 Tage: {gewinn:.2f} €")
 
-elif authentication_status is False:
+elif auth_status is False:
     st.error("❌ Falscher Benutzername oder Passwort")
-elif authentication_status is None:
+elif auth_status is None:
     st.warning("🔐 Bitte einloggen.")
