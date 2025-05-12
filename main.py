@@ -4,16 +4,19 @@ import yaml
 from yaml.loader import SafeLoader
 from pricing_logic import calculate_price
 
-# Authentifizierung
+# Authentifizierung laden
 with open('auth_config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
 authenticator = stauth.Authenticate(
-    config['credentials'], config['cookie']['name'], config['cookie']['key'], config['cookie']['expiry_days']
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days']
 )
 
-# ✅ Korrekt: login() gibt 3 Werte zurück
-name, authentication_status, username = authenticator.login("Login", location='main')
+# 🔑 Login mit 2 Rückgabewerten (kompatibel)
+name, authentication_status = authenticator.login("Login", location="main")
 
 if authentication_status:
     st.title("🏨 Hotel Pricing Demo")
@@ -34,6 +37,6 @@ if authentication_status:
         st.info(f"📆 Gewinn über 90 Tage: {gewinn:.2f} €")
 
 elif authentication_status is False:
-    st.error("❌ Falsche Zugangsdaten.")
+    st.error("❌ Falscher Benutzername oder Passwort")
 elif authentication_status is None:
     st.warning("🔐 Bitte einloggen.")
