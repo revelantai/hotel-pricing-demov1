@@ -15,8 +15,8 @@ authenticator = stauth.Authenticate(
     config['cookie']['expiry_days']
 )
 
-# 🔑 Login mit 2 Rückgabewerten (kompatibel)
-name, authentication_status = authenticator.login("Login", location="main")
+# 🔑 Login mit 3 Rückgabewerten
+name, authentication_status, username = authenticator.login("Login", location="main")
 
 if authentication_status:
     st.title("🏨 Hotel Pricing Demo")
