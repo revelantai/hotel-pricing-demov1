@@ -12,13 +12,12 @@ authenticator = stauth.Authenticate(
     config['credentials'], config['cookie']['name'], config['cookie']['key'], config['cookie']['expiry_days']
 )
 
-auth_status = authenticator.login("Login", location='main')
-if auth_status:
-    name = authenticator.credentials['usernames'][authenticator.username]['name']
+# ✅ Korrekt: login() gibt 3 Werte zurück
+name, authentication_status, username = authenticator.login("Login", location='main')
 
-
-if auth_status:
+if authentication_status:
     st.title("🏨 Hotel Pricing Demo")
+    st.success(f"Willkommen zurück, {name}!")
 
     with st.form("eingabe"):
         zimmer = st.text_input("Zimmername", "Standard")
@@ -34,7 +33,7 @@ if auth_status:
         gewinn = (neuer_preis - basis) * auslastung * 90
         st.info(f"📆 Gewinn über 90 Tage: {gewinn:.2f} €")
 
-elif auth_status is False:
+elif authentication_status is False:
     st.error("❌ Falsche Zugangsdaten.")
-else:
+elif authentication_status is None:
     st.warning("🔐 Bitte einloggen.")
