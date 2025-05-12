@@ -15,13 +15,13 @@ authenticator = stauth.Authenticate(
     config['cookie']['expiry_days']
 )
 
-# ✅ Neue Version: 1 Rückgabewert
+# ✅ Neue Version → nur 1 Rückgabewert
 auth_status = authenticator.login("Login", location="main")
 
-# Zugriff auf Name & Username aus der Session
+# Nutzername und Klarname manuell holen
 if auth_status:
     username = authenticator.username
-    name = config['credentials']['usernames'][username]['name']
+    name = config["credentials"]["usernames"][username]["name"]
 
     st.title("🏨 Hotel Pricing Demo")
     st.success(f"Willkommen zurück, {name}!")
@@ -42,5 +42,6 @@ if auth_status:
 
 elif auth_status is False:
     st.error("❌ Falscher Benutzername oder Passwort")
+
 elif auth_status is None:
     st.warning("🔐 Bitte einloggen.")
