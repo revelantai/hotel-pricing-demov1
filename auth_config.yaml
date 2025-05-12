@@ -1,0 +1,9 @@
+credentials:
+  usernames:
+    demo:
+      name: Demo Hotelier
+      password: "$2b$12$8xNphE5nB3Xo7L4UePUGSOdOdfh6Zd0Ue1e5hP3b8TwzKQsYc7dMS"
+cookie:
+  name: demo_cookie
+  key: some_secure_key
+  expiry_days: 7
