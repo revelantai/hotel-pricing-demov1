@@ -15,13 +15,10 @@ authenticator = stauth.Authenticate(
     config['cookie']['expiry_days']
 )
 
-# NEUE VERSION: Nur ein Rückgabewert
-auth_status = authenticator.login("Login", location="main")
+# ✅ Funktioniert mit deiner Streamlit-Version (3 Rückgabewerte)
+name, auth_status, username = authenticator.login("Login", location="main")
 
 if auth_status:
-    username = authenticator.username
-    name = config["credentials"]["usernames"][username]["name"]
-
     st.title("🏨 Hotel Pricing Demo")
     st.success(f"Willkommen zurück, {name}!")
 
@@ -41,5 +38,6 @@ if auth_status:
 
 elif auth_status is False:
     st.error("❌ Falscher Benutzername oder Passwort")
+
 elif auth_status is None:
     st.warning("🔐 Bitte einloggen.")
